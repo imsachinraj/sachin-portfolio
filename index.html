@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Sachin Kurumanapalli Narasimhulu – Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+:root{--indigo:#4f46e5;--indigo-light:#6366f1;--pink:#ec4899;--cyan:#06b6d4;--amber:#f59e0b;--bg:#f8f7ff;--bg2:#eef0ff;--text:#1e1b4b;--muted:#6b7280;--card:rgba(255,255,255,0.85);--border:rgba(99,102,241,0.15);--grad:linear-gradient(135deg,var(--indigo),var(--pink),var(--cyan));}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;cursor:none;}
+::-webkit-scrollbar{width:6px;}::-webkit-scrollbar-track{background:var(--bg2);}::-webkit-scrollbar-thumb{background:var(--indigo-light);border-radius:99px;}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");opacity:.3;}
+#cursor-dot{position:fixed;width:8px;height:8px;background:var(--pink);border-radius:50%;pointer-events:none;z-index:99999;transform:translate(-50%,-50%);box-shadow:0 0 12px var(--pink),0 0 24px var(--pink);}
+#cursor-ring{position:fixed;width:36px;height:36px;border:2px solid var(--indigo-light);border-radius:50%;pointer-events:none;z-index:99998;transform:translate(-50%,-50%);transition:width .2s,height .2s,border-color .2s;opacity:.7;}
+#particle-canvas{position:fixed;inset:0;z-index:0;pointer-events:none;}
+#loader{position:fixed;inset:0;background:var(--bg);z-index:99997;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px;transition:opacity .6s ease,visibility .6s;}
+#loader.hide{opacity:0;visibility:hidden;}
+.loader-initials{font-family:'Syne',sans-serif;font-size:clamp(3rem,10vw,6rem);font-weight:800;background:linear-gradient(90deg,var(--indigo),var(--pink),var(--cyan),var(--amber),var(--indigo));background-size:300% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:shimmer 2s linear infinite;}
+.loader-bar-wrap{width:240px;height:4px;background:var(--border);border-radius:99px;overflow:hidden;}
+.loader-bar{height:100%;width:0%;background:linear-gradient(90deg,var(--indigo),var(--pink),var(--cyan));border-radius:99px;animation:loadbar 2s ease forwards;}
+@keyframes loadbar{to{width:100%;}}
+@keyframes shimmer{to{background-position:300% center;}}
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(248,247,255,.75);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 clamp(1rem,5vw,3rem);height:64px;transform:translateY(-100%);animation:slideDown .6s .5s ease forwards;}
+@keyframes slideDown{to{transform:translateY(0);}}
+.nav-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.2rem;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-decoration:none;}
+.nav-links{display:flex;gap:2rem;list-style:none;}
+.nav-links a{font-size:.9rem;font-weight:500;color:var(--muted);text-decoration:none;position:relative;padding-bottom:2px;transition:color .2s;}
+.nav-links a::after{content:'';position:absolute;bottom:0;left:0;width:0;height:2px;background:var(--grad);transition:width .3s;border-radius:99px;}
+.nav-links a:hover{color:var(--indigo);}
+.nav-links a:hover::after{width:100%;}
+.reveal{opacity:0;transform:translateY(40px);transition:opacity .7s ease,transform .7s ease;}
+.reveal.from-left{transform:translateX(-40px);}
+.reveal.from-right{transform:translateX(40px);}
+.reveal.visible{opacity:1;transform:none;}
+section{position:relative;z-index:1;padding:clamp(4rem,10vw,7rem) clamp(1rem,6vw,4rem);max-width:1200px;margin:0 auto;}
+.section-tag{display:inline-flex;align-items:center;gap:8px;font-size:.8rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--pink);margin-bottom:1rem;}
+.section-tag::before{content:'';width:24px;height:2px;background:var(--pink);border-radius:99px;}
+h2.section-title{font-family:'Syne',sans-serif;font-size:clamp(2rem,5vw,3rem);font-weight:800;line-height:1.1;margin-bottom:3rem;color:var(--text);}
+h2.section-title span{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+#hero{min-height:100vh;display:flex;align-items:center;padding-top:100px;max-width:none;padding-left:clamp(1rem,6vw,4rem);padding-right:clamp(1rem,6vw,4rem);}
+.hero-inner{max-width:1200px;margin:0 auto;width:100%;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;}
+.hero-avail{display:inline-flex;align-items:center;gap:8px;background:rgba(6,182,212,.1);border:1px solid rgba(6,182,212,.3);border-radius:99px;padding:6px 16px;font-size:.8rem;font-weight:600;color:var(--cyan);margin-bottom:1.5rem;}
+.hero-avail::before{content:'';width:8px;height:8px;background:var(--cyan);border-radius:50%;box-shadow:0 0 8px var(--cyan);animation:blink 1.5s infinite;}
+@keyframes blink{0%,100%{box-shadow:0 0 6px var(--cyan);}50%{box-shadow:0 0 18px var(--cyan),0 0 30px var(--cyan);}}
+.hero-name{font-family:'Syne',sans-serif;font-size:clamp(2.4rem,6vw,4.5rem);font-weight:800;line-height:1.05;margin-bottom:1rem;background:linear-gradient(90deg,var(--indigo),var(--pink),var(--cyan),var(--amber),var(--indigo));background-size:300% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:shimmer 4s linear infinite;}
+.hero-subtitle{font-size:clamp(1rem,2.5vw,1.3rem);color:var(--muted);font-weight:400;margin-bottom:2rem;line-height:1.6;}
+.hero-subtitle strong{color:var(--indigo);font-weight:600;}
+.cta-group{display:flex;gap:1rem;flex-wrap:wrap;}
+.btn{padding:12px 28px;border-radius:99px;font-family:'DM Sans',sans-serif;font-weight:600;font-size:.95rem;text-decoration:none;cursor:pointer;border:none;transition:transform .2s,box-shadow .2s;display:inline-block;}
+.btn-primary{background:var(--grad);color:#fff;box-shadow:0 4px 20px rgba(79,70,229,.35);}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(79,70,229,.45);}
+.btn-outline{background:transparent;border:2px solid var(--indigo-light);color:var(--indigo);}
+.btn-outline:hover{background:var(--indigo);color:#fff;transform:translateY(-2px);}
+.hero-card-wrap{display:flex;justify-content:center;align-items:center;position:relative;}
+.glow-orb{position:absolute;width:280px;height:280px;background:radial-gradient(circle,rgba(79,70,229,.25),transparent 70%);border-radius:50%;animation:floatO 4s ease-in-out infinite;}
+@keyframes floatO{0%,100%{transform:translateY(0) scale(1);}50%{transform:translateY(-14px) scale(1.05);}}
+.spin-ring{position:absolute;width:310px;height:310px;border:2.5px dashed rgba(99,102,241,.3);border-radius:50%;animation:spinR 12s linear infinite;}
+@keyframes spinR{to{transform:rotate(360deg);}}
+.hero-card{position:relative;z-index:2;width:260px;background:rgba(255,255,255,.92);backdrop-filter:blur(20px);border:1px solid var(--border);border-radius:24px;padding:2rem;box-shadow:0 20px 60px rgba(79,70,229,.15);animation:float3d 6s ease-in-out infinite;text-align:center;}
+@keyframes float3d{0%,100%{transform:perspective(800px) rotateY(-6deg) translateY(0);}50%{transform:perspective(800px) rotateY(6deg) translateY(-14px);}}
+.card-avatar{width:80px;height:80px;border-radius:50%;background:var(--grad);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:800;color:#fff;margin:0 auto 1rem;box-shadow:0 8px 24px rgba(79,70,229,.4);}
+.card-name{font-family:'Syne',sans-serif;font-weight:700;font-size:1rem;margin-bottom:.2rem;}
+.card-role{font-size:.82rem;color:var(--muted);margin-bottom:1.2rem;}
+.card-stats{display:flex;gap:.5rem;justify-content:center;}
+.stat{background:var(--bg2);border-radius:12px;padding:8px 12px;text-align:center;}
+.stat-num{font-family:'Syne',sans-serif;font-weight:800;font-size:1.1rem;color:var(--indigo);}
+.stat-lbl{font-size:.65rem;color:var(--muted);}
+.marquee-section{position:relative;z-index:1;overflow:hidden;padding:1.5rem 0;background:rgba(238,240,255,.8);border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+.marquee-track{display:flex;gap:3rem;animation:marquee 22s linear infinite;width:max-content;}
+.marquee-item{font-family:'Syne',sans-serif;font-weight:700;font-size:1rem;color:var(--muted);white-space:nowrap;display:flex;align-items:center;gap:.8rem;}
+.marquee-item::after{content:'✦';color:var(--pink);font-size:.7rem;}
+@keyframes marquee{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+.skills-grid{display:grid;grid-template-columns:1fr 1fr;gap:2.5rem;}
+.skill-category h3{font-family:'Syne',sans-serif;font-weight:700;font-size:.95rem;color:var(--indigo);margin-bottom:1.2rem;}
+.skill-bar-wrap{margin-bottom:.9rem;}
+.skill-label{display:flex;justify-content:space-between;font-size:.82rem;margin-bottom:.35rem;font-weight:500;}
+.skill-track{height:8px;background:var(--bg2);border-radius:99px;overflow:hidden;}
+.skill-fill{height:100%;width:0%;border-radius:99px;background:linear-gradient(90deg,var(--indigo),var(--pink),var(--cyan));background-size:200%;transition:width 1.2s cubic-bezier(.4,0,.2,1);position:relative;overflow:hidden;}
+.skill-fill::after{content:'';position:absolute;top:0;left:-100%;width:60%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.5),transparent);}
+.skill-fill.animated::after{animation:sweep 1.4s .9s forwards;}
+@keyframes sweep{to{left:150%;}}
+.chip-cloud{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.7rem;}
+.chip{padding:5px 12px;border-radius:99px;font-size:.75rem;font-weight:600;border:1.5px solid;transition:transform .2s,box-shadow .2s;cursor:default;}
+.chip:hover{transform:translateY(-4px);box-shadow:0 6px 18px rgba(0,0,0,.08);}
+.chip-a{color:var(--indigo);border-color:rgba(79,70,229,.3);background:rgba(79,70,229,.06);}
+.chip-b{color:var(--pink);border-color:rgba(236,72,153,.3);background:rgba(236,72,153,.06);}
+.chip-c{color:var(--cyan);border-color:rgba(6,182,212,.3);background:rgba(6,182,212,.06);}
+.chip-d{color:var(--amber);border-color:rgba(245,158,11,.3);background:rgba(245,158,11,.06);}
+.timeline{position:relative;padding-left:2.5rem;}
+.timeline::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:linear-gradient(to bottom,var(--indigo),var(--pink),var(--cyan));border-radius:99px;}
+.timeline-item{position:relative;margin-bottom:2.5rem;}
+.timeline-item::before{content:'';position:absolute;left:-2.88rem;top:1.4rem;width:14px;height:14px;border-radius:50%;background:var(--grad);box-shadow:0 0 12px rgba(79,70,229,.5);}
+.exp-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:1.8rem;box-shadow:0 4px 20px rgba(79,70,229,.07);transition:transform .3s,box-shadow .3s;}
+.exp-card:hover{transform:translateX(8px);box-shadow:0 12px 40px rgba(79,70,229,.14);}
+.exp-header{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:.5rem;margin-bottom:.4rem;}
+.exp-title{font-family:'Syne',sans-serif;font-weight:700;font-size:1.1rem;}
+.exp-date{font-size:.78rem;color:var(--muted);background:var(--bg2);padding:3px 10px;border-radius:99px;}
+.exp-meta{display:flex;gap:.6rem;flex-wrap:wrap;margin-bottom:.8rem;}
+.exp-company{font-weight:600;color:var(--indigo);font-size:.9rem;}
+.exp-loc{font-size:.8rem;color:var(--muted);}
+.exp-desc{list-style:none;}
+.exp-desc li{font-size:.88rem;color:var(--muted);line-height:1.7;padding:.25rem 0 .25rem 1.2rem;position:relative;}
+.exp-desc li::before{content:'→';position:absolute;left:0;color:var(--pink);font-size:.8rem;top:.28rem;}
+.badge-group{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.8rem;}
+.badge{font-size:.72rem;font-weight:600;padding:3px 10px;border-radius:99px;}
+.ba{background:rgba(79,70,229,.1);color:var(--indigo);}
+.bb{background:rgba(236,72,153,.1);color:var(--pink);}
+.bc{background:rgba(6,182,212,.1);color:var(--cyan);}
+.bd{background:rgba(245,158,11,.1);color:var(--amber);}
+.projects-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;}
+.proj-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:1.8rem;box-shadow:0 4px 20px rgba(79,70,229,.07);transition:transform .3s,box-shadow .3s;position:relative;overflow:hidden;}
+.proj-card::before{content:'';position:absolute;top:0;left:-100%;right:100%;height:3px;background:var(--grad);transition:left .4s ease,right .4s ease;}
+.proj-card:hover{transform:translateY(-6px);box-shadow:0 18px 50px rgba(79,70,229,.16);}
+.proj-card:hover::before{left:0;right:0;}
+.proj-emoji{font-size:2rem;margin-bottom:.8rem;display:block;}
+.proj-name{font-family:'Syne',sans-serif;font-weight:700;font-size:.95rem;margin-bottom:.5rem;}
+.proj-desc{font-size:.82rem;color:var(--muted);line-height:1.6;margin-bottom:.8rem;}
+.proj-tags{display:flex;flex-wrap:wrap;gap:.4rem;}
+.proj-tag{font-size:.72rem;padding:3px 10px;border-radius:99px;background:var(--bg2);color:var(--indigo);font-weight:600;}
+.edu-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-bottom:2.5rem;}
+.edu-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:1.6rem;box-shadow:0 4px 20px rgba(79,70,229,.07);transition:transform .3s;}
+.edu-card:hover{transform:translateY(-4px);}
+.edu-level{font-size:.75rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:.4rem;}
+.edu-inst{font-family:'Syne',sans-serif;font-weight:700;font-size:.9rem;margin-bottom:.3rem;}
+.edu-year{font-size:.78rem;color:var(--muted);}
+.lang-badges{display:flex;flex-wrap:wrap;gap:.7rem;margin-top:.8rem;}
+.lang-badge{padding:8px 20px;border-radius:99px;font-weight:600;font-size:.85rem;background:var(--card);border:1.5px solid var(--border);transition:transform .2s;}
+.lang-badge:hover{transform:scale(1.06);}
+.cert-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:.8rem;}
+.cert-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1rem 1.2rem;display:flex;align-items:center;gap:.8rem;transition:transform .2s,box-shadow .2s;}
+.cert-card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(79,70,229,.12);}
+.cert-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;}
+.cert-text{font-size:.82rem;font-weight:500;}
+.cert-issuer{font-size:.72rem;color:var(--muted);}
+.pub-card{background:linear-gradient(135deg,rgba(79,70,229,.07),rgba(6,182,212,.07));border:1px solid var(--border);border-radius:20px;padding:2rem;display:flex;gap:1.5rem;align-items:flex-start;}
+.pub-icon{font-size:2.5rem;}
+.pub-title{font-family:'Syne',sans-serif;font-weight:700;font-size:1rem;margin-bottom:.5rem;}
+.pub-meta{font-size:.84rem;color:var(--muted);line-height:1.6;}
+.pub-badge{display:inline-block;margin-top:.6rem;padding:3px 12px;border-radius:99px;background:rgba(79,70,229,.1);color:var(--indigo);font-size:.75rem;font-weight:700;}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center;}
+.contact-info{display:flex;flex-direction:column;gap:1rem;}
+.contact-card{display:flex;align-items:center;gap:1rem;background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.2rem 1.6rem;box-shadow:0 2px 12px rgba(79,70,229,.06);transition:transform .3s,box-shadow .3s;}
+.contact-card:hover{transform:translateX(8px);box-shadow:0 8px 28px rgba(79,70,229,.14);}
+.contact-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;}
+.contact-label{font-size:.75rem;color:var(--muted);font-weight:500;}
+.contact-val{font-weight:600;font-size:.9rem;}
+.ripple-container{position:relative;width:180px;height:180px;display:flex;align-items:center;justify-content:center;}
+.ripple-ring{position:absolute;border-radius:50%;border:2px solid var(--indigo-light);animation:ripOut 2.4s ease-out infinite;}
+.ripple-ring:nth-child(1){width:90px;height:90px;animation-delay:0s;}
+.ripple-ring:nth-child(2){width:130px;height:130px;animation-delay:.7s;}
+.ripple-ring:nth-child(3){width:170px;height:170px;animation-delay:1.4s;}
+@keyframes ripOut{0%{opacity:.8;transform:scale(.7);}100%{opacity:0;transform:scale(1);}}
+.contact-avatar{position:relative;z-index:2;width:76px;height:76px;border-radius:50%;background:var(--grad);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:1.5rem;font-weight:800;color:#fff;box-shadow:0 8px 30px rgba(79,70,229,.4);}
+footer{text-align:center;padding:2rem;font-size:.85rem;color:var(--muted);border-top:1px solid var(--border);position:relative;z-index:1;}
+.sec-bg{background:rgba(238,240,255,.5);border-radius:32px;margin:0 clamp(.5rem,3vw,2rem) 2rem;}
+@media(max-width:900px){
+  .hero-inner{grid-template-columns:1fr;text-align:center;}
+  .hero-card-wrap{margin-top:2rem;}
+  .skills-grid,.edu-grid,.contact-grid{grid-template-columns:1fr;}
+  .projects-grid{grid-template-columns:1fr;}
+  .contact-avatar-wrap{display:none;}
+  .nav-links{display:none;}
+  .cta-group{justify-content:center;}
+}
+@media(max-width:1100px){.projects-grid{grid-template-columns:1fr 1fr;}}
+</style>
+</head>
+<body>
+<div id="cursor-dot"></div>
+<div id="cursor-ring"></div>
+<canvas id="particle-canvas"></canvas>
+<div id="loader">
+  <div class="loader-initials">SKN</div>
+  <div class="loader-bar-wrap"><div class="loader-bar"></div></div>
+</div>
+
+<nav>
+  <a href="#hero" class="nav-logo">Sachin K.N.</a>
+  <ul class="nav-links">
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#certifications">Certs</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div id="hero" style="position:relative;z-index:1;">
+  <div class="hero-inner">
+    <div class="reveal">
+      <div class="hero-avail">Open to Opportunities</div>
+      <h1 class="hero-name">Sachin Kurumanapalli Narasimhulu</h1>
+      <p class="hero-subtitle">
+        <strong>BTech Engineer</strong> · IoT &amp; Embedded Systems Developer<br>
+        Control Systems · Machine Learning · Full Stack
+      </p>
+      <div class="cta-group">
+        <a href="mailto:sachinrajkns@gmail.com" class="btn btn-primary">Get In Touch</a>
+        <a href="#projects" class="btn btn-outline">View Projects</a>
+      </div>
+    </div>
+    <div class="hero-card-wrap reveal from-right">
+      <div class="glow-orb"></div>
+      <div class="spin-ring"></div>
+      <div class="hero-card">
+        <div class="card-avatar">SKN</div>
+        <div class="card-name">Sachin K.N.</div>
+        <div class="card-role">IoT · Embedded · ML Engineer</div>
+        <div class="card-stats">
+          <div class="stat"><div class="stat-num">2</div><div class="stat-lbl">Internships</div></div>
+          <div class="stat"><div class="stat-num">5+</div><div class="stat-lbl">Projects</div></div>
+          <div class="stat"><div class="stat-num">1</div><div class="stat-lbl">Publication</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MARQUEE -->
+<div class="marquee-section">
+  <div class="marquee-track">
+    <span class="marquee-item">Algain Electronics</span>
+    <span class="marquee-item">Kaynes Technology</span>
+    <span class="marquee-item">TONBO Imaging</span>
+    <span class="marquee-item">SIGNALLX DI3</span>
+    <span class="marquee-item">IEEE Conference</span>
+    <span class="marquee-item">NodeMCU</span>
+    <span class="marquee-item">Arduino UNO</span>
+    <span class="marquee-item">MQTT Protocol</span>
+    <span class="marquee-item">ThingSpeak Cloud</span>
+    <span class="marquee-item">Madanapalle Institute</span>
+    <span class="marquee-item">Algain Electronics</span>
+    <span class="marquee-item">Kaynes Technology</span>
+    <span class="marquee-item">TONBO Imaging</span>
+    <span class="marquee-item">SIGNALLX DI3</span>
+    <span class="marquee-item">IEEE Conference</span>
+    <span class="marquee-item">NodeMCU</span>
+    <span class="marquee-item">Arduino UNO</span>
+    <span class="marquee-item">MQTT Protocol</span>
+    <span class="marquee-item">ThingSpeak Cloud</span>
+    <span class="marquee-item">Madanapalle Institute</span>
+  </div>
+</div>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-tag">Expertise</div>
+  <h2 class="section-title">Skills &amp; <span>Technologies</span></h2>
+  <div class="skills-grid">
+    <div class="reveal from-left">
+      <h3>🔌 Embedded &amp; IoT</h3>
+      <div class="skill-bar-wrap"><div class="skill-label"><span>Embedded C / Arduino</span><span>90%</span></div><div class="skill-track"><div class="skill-fill" data-pct="90"></div></div></div>
+      <div class="skill-bar-wrap"><div class="skill-label"><span>NodeMCU / IoT Cloud</span><span>88%</span></div><div class="skill-track"><div class="skill-fill" data-pct="88"></div></div></div>
+      <div class="skill-bar-wrap"><div class="skill-label"><span>Serial UART Communication</span><span>85%</span></div><div class="skill-track"><div class="skill-fill" data-pct="85"></div></div></div>
+      <div class="skill-bar-wrap"><div class="skill-label"><span>TCP/IP / MQTT</span><span>80%</span></div><div class="skill-track"><div class="skill-fill" data-pct="80"></div></div></div>
+      <div class="chip-cloud">
+        <span class="chip chip-a">Arduino</span><span class="chip chip-c">NodeMCU</span><span class="chip chip-b">MQTT</span><span class="chip chip-d">ThingSpeak</span><span class="chip chip-a">GSM Module</span><span class="chip chip-c">PIR Sensor</span><span class="chip chip-b">DF Player Mini</span>
+      </div>
+    </div>
+    <div class="reveal from-right">
+      <h3>💻 Programming Languages</h3>
+      <div class="skill-bar-wrap"><div class="skill-label"><span>C / Embedded C</span><span>88%</span></div><div class="skill-track"><div class="skill-fill" data-pct="88"></div></div></div>
+      <div class="skill-bar-wrap"><div class="skill-label"><span>Python</span><span>84%</span></div><div class="skill-track"><div class="skill-fill" data-pct="84"></div></div></div>
+      <div class="skill-bar-wrap"><div class="skill-label"><span>MATLAB</span><span>76%</span></div><div class="skill-track"><div class="skill-fill" data-pct="76"></div></div></div>
+      <div class="skill-bar-wrap"><div class="skill-label"><span>SQL / REST API / ORM</span><span>72%</span></div><div class="skill-track"><div class="skill-fill" data-pct="72"></div></div></div>
+      <div class="chip-cloud">
+        <span class="chip chip-a">Python</span><span class="chip chip-b">MATLAB</span><span class="chip chip-c">Java</span><span class="chip chip-d">C#</span><span class="chip chip-a">SQL</span><span class="chip chip-b">REST API</span><span class="chip chip-c">Full Stack</span><span class="chip chip-d">ORM</span>
+      </div>
+    </div>
+    <div class="reveal from-left">
+      <h3>🤖 Data &amp; AI</h3>
+      <div class="skill-bar-wrap"><div class="skill-label"><span>Machine Learning</span><span>80%</span></div><div class="skill-track"><div class="skill-fill" data-pct="80"></div></div></div>
+      <div class="skill-bar-wrap"><div class="skill-label"><span>Neural Networks (ANN / LSTM)</span><span>78%</span></div><div class="skill-track"><div class="skill-fill" data-pct="78"></div></div></div>
+      <div class="skill-bar-wrap"><div class="skill-label"><span>GBDT / Ensemble Models</span><span>75%</span></div><div class="skill-track"><div class="skill-fill" data-pct="75"></div></div></div>
+      <div class="chip-cloud">
+        <span class="chip chip-a">GBDT</span><span class="chip chip-b">ANN</span><span class="chip chip-c">LSTM</span><span class="chip chip-d">Data Analytics</span><span class="chip chip-a">Quantile Regression</span><span class="chip chip-b">Fuzzy Logic</span>
+      </div>
+    </div>
+    <div class="reveal from-right">
+      <h3>⚙️ Control &amp; Design</h3>
+      <div class="skill-bar-wrap"><div class="skill-label"><span>PLC / SCADA</span><span>73%</span></div><div class="skill-track"><div class="skill-fill" data-pct="73"></div></div></div>
+      <div class="skill-bar-wrap"><div class="skill-label"><span>PCB Design (KiCAD / ECAD)</span><span>76%</span></div><div class="skill-track"><div class="skill-fill" data-pct="76"></div></div></div>
+      <div class="skill-bar-wrap"><div class="skill-label"><span>AutoCAD</span><span>70%</span></div><div class="skill-track"><div class="skill-fill" data-pct="70"></div></div></div>
+      <div class="chip-cloud">
+        <span class="chip chip-a">PLC</span><span class="chip chip-b">SCADA</span><span class="chip chip-c">KiCAD</span><span class="chip chip-d">AutoCAD</span><span class="chip chip-a">ECAD</span><span class="chip chip-b">Motion Control</span><span class="chip chip-c">Network Security</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience" class="sec-bg">
+  <div class="section-tag">Career</div>
+  <h2 class="section-title">Work <span>Experience</span></h2>
+  <div class="timeline">
+    <div class="timeline-item reveal">
+      <div class="exp-card">
+        <div class="exp-header">
+          <div class="exp-title">IoT Development Intern</div>
+          <div class="exp-date">Jun 2025 – Aug 2025</div>
+        </div>
+        <div class="exp-meta">
+          <span class="exp-company">Algain Electronics Pvt Ltd</span>
+        </div>
+        <ul class="exp-desc">
+          <li>Designed &amp; implemented a Smart Streetlight Fault Detection system on NodeMCU with Arduino-driven sensor array via serial UART — achieved 95% fault detection accuracy across 200 street units, cutting response time by 40%.</li>
+          <li>Engineered a Door Audio Alert prototype using DF Player Mini; optimized power consumption by 30% via sleep mode scheduling; logged events to cloud via TCP/IP (MQTT), handling ~500 messages/day.</li>
+          <li>Gathered user requirements from municipal maintenance teams to shape system architecture and feature scope.</li>
+        </ul>
+        <div class="badge-group">
+          <span class="badge ba">NodeMCU</span><span class="badge bb">Arduino</span><span class="badge bc">MQTT</span><span class="badge bd">Embedded C</span><span class="badge ba">Serial UART</span><span class="badge bb">IoT Cloud</span>
+        </div>
+      </div>
+    </div>
+    <div class="timeline-item reveal">
+      <div class="exp-card">
+        <div class="exp-header">
+          <div class="exp-title">PCM Assembly Intern</div>
+          <div class="exp-date">Jun 2024 – Jul 2024</div>
+        </div>
+        <div class="exp-meta">
+          <span class="exp-company">Kaynes Technology India Limited</span>
+          <span class="exp-loc">📍 Mysuru</span>
+        </div>
+        <ul class="exp-desc">
+          <li>Assembled and tested 150+ TONBO Imaging control modules; verified serial communication interfaces and calibrated motion control firmware — delivered 99% first-pass yield.</li>
+          <li>Executed system-level validation of SIGNALLX DI3 Infotech devices; measured TCP/IP throughput; design tweaks improved data latency by 20%.</li>
+          <li>Standardized PCB test jigs and inspection checklists, reducing cycle time by 15% in high-volume production.</li>
+        </ul>
+        <div class="badge-group">
+          <span class="badge ba">PCB Testing</span><span class="badge bb">TCP/IP</span><span class="badge bc">Motion Control</span><span class="badge bd">TONBO Imaging</span><span class="badge ba">Serial Comm</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-tag">Portfolio</div>
+  <h2 class="section-title">Featured <span>Projects</span></h2>
+  <div class="projects-grid">
+    <div class="proj-card reveal">
+      <span class="proj-emoji">🔦</span>
+      <div class="proj-name">Streetlight Remote Monitoring System</div>
+      <div class="proj-desc">GSM-based remote monitoring system for streetlights implemented in college campus with real-time status alerts and fault reporting.</div>
+      <div class="proj-tags"><span class="proj-tag">GSM Module</span><span class="proj-tag">NodeMCU</span><span class="proj-tag">IoT</span></div>
+    </div>
+    <div class="proj-card reveal">
+      <span class="proj-emoji">⚡</span>
+      <div class="proj-name">Smart Streetlight Fault Detecting System</div>
+      <div class="proj-desc">NodeMCU-powered fault detection with Google Spreadsheets integration for live cloud data logging and automated fault notifications.</div>
+      <div class="proj-tags"><span class="proj-tag">NodeMCU</span><span class="proj-tag">Google Sheets</span><span class="proj-tag">Cloud Logging</span></div>
+    </div>
+    <div class="proj-card reveal">
+      <span class="proj-emoji">🚪</span>
+      <div class="proj-name">Door Audio Alert System</div>
+      <div class="proj-desc">PIR sensor triggered audio alert prototype using Arduino UNO and DF Player Mini for real-time spoken notifications at entry points.</div>
+      <div class="proj-tags"><span class="proj-tag">Arduino UNO</span><span class="proj-tag">PIR Sensor</span><span class="proj-tag">DF Player Mini</span></div>
+    </div>
+    <div class="proj-card reveal">
+      <span class="proj-emoji">🔢</span>
+      <div class="proj-name">IoT Based Smart Room Entry &amp; Exit Counter</div>
+      <div class="proj-desc">Automated occupancy counter using NodeMCU with ThingSpeak cloud dashboard for real-time monitoring and historical analytics.</div>
+      <div class="proj-tags"><span class="proj-tag">NodeMCU</span><span class="proj-tag">ThingSpeak</span><span class="proj-tag">Real-Time</span></div>
+    </div>
+    <div class="proj-card reveal">
+      <span class="proj-emoji">🔋</span>
+      <div class="proj-name">Uncertainty-Aware Probabilistic Quantile Ensemble for Li-Ion Battery Management</div>
+      <div class="proj-desc">Ensemble ML model (GBDT + ANN + LSTM) with quantile regression for battery state estimation under temperature variation. MAE: 0.035–0.048 · RMSE: 0.045–0.060.</div>
+      <div class="proj-tags"><span class="proj-tag">GBDT</span><span class="proj-tag">ANN</span><span class="proj-tag">LSTM</span><span class="proj-tag">Quantile Regression</span><span class="proj-tag">IEEE Published</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION & LANGUAGES -->
+<section id="education" class="sec-bg">
+  <div class="section-tag">Academic</div>
+  <h2 class="section-title">Education &amp; <span>Languages</span></h2>
+  <div class="edu-grid">
+    <div class="edu-card reveal">
+      <div class="edu-level" style="color:var(--indigo);">B.Tech</div>
+      <div class="edu-inst">Madanapalle Institute of Technology and Science</div>
+      <div class="edu-year">📅 Present (Ongoing)</div>
+    </div>
+    <div class="edu-card reveal">
+      <div class="edu-level" style="color:var(--pink);">Intermediate</div>
+      <div class="edu-inst">AP Model School and Junior College</div>
+      <div class="edu-year">📅 2022</div>
+    </div>
+    <div class="edu-card reveal">
+      <div class="edu-level" style="color:var(--cyan);">SSC</div>
+      <div class="edu-inst">AP Model School and Junior College</div>
+      <div class="edu-year">📅 2020</div>
+    </div>
+  </div>
+  <div class="reveal">
+    <h3 style="font-family:'Syne',sans-serif;font-weight:700;font-size:1.1rem;margin-bottom:.8rem;">🌏 Languages</h3>
+    <div class="lang-badges">
+      <span class="lang-badge" style="color:var(--indigo);border-color:rgba(79,70,229,.3);">🇬🇧 English</span>
+      <span class="lang-badge" style="color:var(--pink);border-color:rgba(236,72,153,.3);">🇮🇳 Telugu</span>
+      <span class="lang-badge" style="color:var(--cyan);border-color:rgba(6,182,212,.3);">🇮🇳 Tamil</span>
+      <span class="lang-badge" style="color:var(--amber);border-color:rgba(245,158,11,.3);">🇮🇳 Kannada</span>
+      <span class="lang-badge" style="color:var(--indigo);border-color:rgba(79,70,229,.3);">🇮🇳 Hindi</span>
+    </div>
+  </div>
+</section>
+
+<!-- CERTIFICATIONS -->
+<section id="certifications">
+  <div class="section-tag">Credentials</div>
+  <h2 class="section-title">Certifications &amp; <span>Courses</span></h2>
+  <div class="cert-grid reveal">
+    <div class="cert-card"><div class="cert-icon" style="background:rgba(79,70,229,.1);">🤖</div><div><div class="cert-text">AI Fundamentals</div><div class="cert-issuer">IBM</div></div></div>
+    <div class="cert-card"><div class="cert-icon" style="background:rgba(6,182,212,.1);">🛡️</div><div><div class="cert-text">Introduction to Cyber Security</div><div class="cert-issuer">CISCO</div></div></div>
+    <div class="cert-card"><div class="cert-icon" style="background:rgba(245,158,11,.1);">📊</div><div><div class="cert-text">Data Analytics Certification</div><div class="cert-issuer">Google</div></div></div>
+    <div class="cert-card"><div class="cert-icon" style="background:rgba(236,72,153,.1);">🎤</div><div><div class="cert-text">Speaking Effectively</div><div class="cert-issuer">NPTEL</div></div></div>
+    <div class="cert-card"><div class="cert-icon" style="background:rgba(79,70,229,.1);">🔬</div><div><div class="cert-text">Research Methodology</div><div class="cert-issuer">NPTEL</div></div></div>
+    <div class="cert-card"><div class="cert-icon" style="background:rgba(6,182,212,.1);">⚖️</div><div><div class="cert-text">Ethics in Engineering Practice</div><div class="cert-issuer">NPTEL</div></div></div>
+    <div class="cert-card"><div class="cert-icon" style="background:rgba(245,158,11,.1);">🧠</div><div><div class="cert-text">Fuzzy Logic &amp; Neural Networks</div><div class="cert-issuer">NPTEL</div></div></div>
+    <div class="cert-card"><div class="cert-icon" style="background:rgba(236,72,153,.1);">🌐</div><div><div class="cert-text">Communication Networks</div><div class="cert-issuer">NPTEL</div></div></div>
+    <div class="cert-card"><div class="cert-icon" style="background:rgba(79,70,229,.1);">🤖</div><div><div class="cert-text">Introduction to Machine Learning</div><div class="cert-issuer">NPTEL</div></div></div>
+    <div class="cert-card"><div class="cert-icon" style="background:rgba(6,182,212,.1);">🔒</div><div><div class="cert-text">Cybersecurity — Networking Academy</div><div class="cert-issuer">Cisco</div></div></div>
+  </div>
+</section>
+
+<!-- PUBLICATIONS & AWARDS -->
+<section class="sec-bg">
+  <div class="section-tag">Research &amp; Recognition</div>
+  <h2 class="section-title">Publications &amp; <span>Awards</span></h2>
+  <div class="pub-card reveal" style="margin-bottom:2rem;">
+    <div class="pub-icon">📄</div>
+    <div>
+      <div class="pub-title">Uncertainty-Aware Probabilistic Quantile Ensemble for Li-Ion Battery Management in Temperature Effects</div>
+      <div class="pub-meta">Ensemble model using GBDT, ANN, and LSTM with quantile regression for uncertainty estimation. Achieved MAE 0.035–0.048 and RMSE 0.045–0.060 across multiple temperature conditions.</div>
+      <span class="pub-badge">📚 IEEE Conference Publication</span>
+    </div>
+  </div>
+  <div style="display:flex;flex-wrap:wrap;gap:.8rem;" class="reveal">
+    <div class="cert-card"><div class="cert-icon" style="background:rgba(245,158,11,.1);">🏆</div><div><div class="cert-text">1st Prize – Photography Contest</div><div class="cert-issuer">Flash Fiesta</div></div></div>
+    <div class="cert-card"><div class="cert-icon" style="background:rgba(79,70,229,.1);">🤖</div><div><div class="cert-text">AI-Based Portfolio</div><div class="cert-issuer">Achievement</div></div></div>
+    <div class="cert-card"><div class="cert-icon" style="background:rgba(6,182,212,.1);">🎯</div><div><div class="cert-text">Organizer – Technical Quiz</div><div class="cert-issuer">Event Management</div></div></div>
+    <div class="cert-card"><div class="cert-icon" style="background:rgba(236,72,153,.1);">📋</div><div><div class="cert-text">Poster Presentation Participant</div><div class="cert-issuer">Academic</div></div></div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-tag">Connect</div>
+  <h2 class="section-title">Get In <span>Touch</span></h2>
+  <div class="contact-grid">
+    <div class="contact-info">
+      <div class="contact-card reveal from-left">
+        <div class="contact-icon" style="background:rgba(236,72,153,.1);">📧</div>
+        <div><div class="contact-label">Email</div><div class="contact-val">sachinrajkns@gmail.com</div></div>
+      </div>
+      <div class="contact-card reveal from-left">
+        <div class="contact-icon" style="background:rgba(6,182,212,.1);">📱</div>
+        <div><div class="contact-label">Phone</div><div class="contact-val">+91 6305509197</div></div>
+      </div>
+      <div class="contact-card reveal from-left">
+        <div class="contact-icon" style="background:rgba(79,70,229,.1);">📍</div>
+        <div><div class="contact-label">Location</div><div class="contact-val">Kuppam, Andhra Pradesh</div></div>
+      </div>
+      <div class="contact-card reveal from-left">
+        <div class="contact-icon" style="background:rgba(245,158,11,.1);">✅</div>
+        <div><div class="contact-label">Status</div><div class="contact-val">Open to Opportunities</div></div>
+      </div>
+    </div>
+    <div class="contact-avatar-wrap reveal from-right" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.5rem;">
+      <div class="ripple-container">
+        <div class="ripple-ring"></div>
+        <div class="ripple-ring"></div>
+        <div class="ripple-ring"></div>
+        <div class="contact-avatar">SKN</div>
+      </div>
+      <div style="text-align:center;">
+        <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:1.1rem;">Sachin K.N.</div>
+        <div style="font-size:.85rem;color:var(--muted);margin-top:.3rem;">BTech Engineer · IoT · ML</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>Crafted with ❤️ · <strong>Sachin Kurumanapalli Narasimhulu</strong> · Kuppam, Andhra Pradesh · 2025</p>
+</footer>
+
+<script>
+// LOADER
+window.addEventListener('load',()=>setTimeout(()=>document.getElementById('loader').classList.add('hide'),2200));
+
+// CURSOR
+const dot=document.getElementById('cursor-dot'),ring=document.getElementById('cursor-ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;dot.style.left=mx+'px';dot.style.top=my+'px';});
+(function animRing(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(animRing);})();
+document.querySelectorAll('a,button,.btn,.proj-card,.exp-card,.contact-card,.cert-card').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{ring.style.width='56px';ring.style.height='56px';ring.style.borderColor='var(--pink)';});
+  el.addEventListener('mouseleave',()=>{ring.style.width='36px';ring.style.height='36px';ring.style.borderColor='var(--indigo-light)';});
+});
+
+// PARTICLES
+const canvas=document.getElementById('particle-canvas');
+const ctx=canvas.getContext('2d');
+const colors=['#4f46e5','#ec4899','#06b6d4','#f59e0b'];
+let W,H,pts=[];
+function resize(){W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight;}
+resize();window.addEventListener('resize',resize);
+function mkPt(){return{x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.55,vy:(Math.random()-.5)*.55,r:Math.random()*2+1,c:colors[Math.floor(Math.random()*4)]};}
+for(let i=0;i<80;i++)pts.push(mkPt());
+(function draw(){
+  ctx.clearRect(0,0,W,H);
+  for(let i=0;i<pts.length;i++){
+    const p=pts[i];p.x+=p.vx;p.y+=p.vy;
+    if(p.x<0||p.x>W)p.vx*=-1;if(p.y<0||p.y>H)p.vy*=-1;
+    ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle=p.c;ctx.globalAlpha=.65;ctx.fill();ctx.globalAlpha=1;
+    for(let j=i+1;j<pts.length;j++){
+      const q=pts[j];const dx=p.x-q.x,dy=p.y-q.y,d=Math.sqrt(dx*dx+dy*dy);
+      if(d<120){ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(q.x,q.y);ctx.strokeStyle=p.c;ctx.globalAlpha=(1-d/120)*.28;ctx.lineWidth=.7;ctx.stroke();ctx.globalAlpha=1;}
+    }
+  }
+  requestAnimationFrame(draw);
+})();
+
+// SCROLL REVEAL
+const io=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)setTimeout(()=>e.target.classList.add('visible'),60);}),{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+// SKILL BARS
+const bIO=new IntersectionObserver(entries=>entries.forEach(e=>{
+  if(e.isIntersecting){const f=e.target;f.style.width=f.dataset.pct+'%';f.classList.add('animated');bIO.unobserve(f);}
+}),{threshold:.4});
+document.querySelectorAll('.skill-fill').forEach(f=>bIO.observe(f));
+</script>
+</body>
+</html>
